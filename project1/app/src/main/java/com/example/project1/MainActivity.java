@@ -13,9 +13,9 @@ import javax.xml.transform.Result;
 
 public class MainActivity extends AppCompatActivity {
 
-Button record;
-Button result;
-ImageView icon;
+    Button record;
+    Button result;
+    ImageView icon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,24 +24,20 @@ ImageView icon;
         record = (Button)findViewById(R.id.record);
         result = (Button)findViewById(R.id.result);
         icon = (ImageView)findViewById(R.id.icon);
+
         record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 Intent intent = new Intent(MainActivity.this, RecordActivity.class);
                 startActivity(intent);
-
             }
         });
 
         result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-                startActivity(intent);
+                Intent intent2 = new Intent(MainActivity.this, ResultActivity.class);
+                startActivity(intent2);
 
             }
         });
