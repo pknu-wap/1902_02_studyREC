@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.project1.R;
+
 import javax.xml.transform.Result;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(MainActivity.this, ResultActivity.class);
-                startActivity(intent2);
+                Intent intent= new Intent(MainActivity.this, RResultActivity.class);
+                startActivity(intent);
 
             }
         });
