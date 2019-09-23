@@ -50,13 +50,7 @@
             android:onClick="mOnClick"
             />
 
-        <Button
-            android:text="DELETE"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnDelete"
-            android:onClick="mOnClick"
-            />
+
     </LinearLayout>
 
     <ListView
