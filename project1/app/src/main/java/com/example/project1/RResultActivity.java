@@ -19,8 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.project1.R;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -66,17 +64,29 @@ public class RResultActivity extends AppCompatActivity {
         ed = (EditText) findViewById(R.id.newitem);
 
         //listview 꾹 누르면 다이얼(대화상자) 뜨게 하기
-
-
-
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), "꾹 눌러짐.", Toast.LENGTH_LONG).show();
                 show();
                 return false;
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(RResultActivity.this, ResultActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+
+
+
+
     }
 
 
@@ -91,10 +101,7 @@ public class RResultActivity extends AppCompatActivity {
 
     }
 
-
-
     /** 사용가능한 내장 메모리 크기를 가져온다 */
-
     private long getInternalMemorySize() {
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());
@@ -105,7 +112,6 @@ public class RResultActivity extends AppCompatActivity {
 
 
     /** 보기 좋게 MB,KB 단위로 축소시킨다 */
-
     private String formatSize(long size) {
         String suffix = null;
         if (size >= 1024) {
@@ -173,8 +179,6 @@ public class RResultActivity extends AppCompatActivity {
     }
 
 
-
-
     //대화상자에서 삭제 선택 시
     void Delete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -219,19 +223,14 @@ public class RResultActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         String text = edittext.getText().toString();        // EditText에 입력된 문자열값을 얻기
-
-
-
-                        //edittext에서 받아온 값으로 listview의 이름을 수정해야 함 이게 안됨 ㅅㅂ...
-
-
-
-                        if (!text.isEmpty()) {                        // 입력된 text 문자열이 비어있지 않으면
-
-                            ed.setText("");                           // EditText 입력란 초기화
-                            adapter.notifyDataSetChanged();           // 리스트 목록 갱신
+                        int pos = listView.getCheckedItemPosition(); // 현재 선택된 항목의 첨자(위치값) 얻기
+                        if (pos != ListView.INVALID_POSITION) {
+                            if (!text.isEmpty()) {                        // 입력된 text 문자열이 비어있지 않으면
+                                items.set(pos,text);                           //arraylist에 저장된 listview(pos)의 내용을 text로 수정
+                                adapter.notifyDataSetChanged();           // 리스트 목록 갱신
+                            }
+                            Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
                         }
-                        Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
                     }
                 });
         builder.setNegativeButton("취소",
@@ -243,6 +242,8 @@ public class RResultActivity extends AppCompatActivity {
         builder.show();
 
     }
+
+
 
 
 }
