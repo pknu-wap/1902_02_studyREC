@@ -47,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_RECORD_AUDIO) {
             if (resultCode == RESULT_OK) {
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 Toast.makeText(this, "Audio recorded successfully!", Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 Toast.makeText(this, "Audio was not recorded", Toast.LENGTH_SHORT).show();
             }
         }
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public void storageLayout(View v){
         Intent intent = new Intent(MainActivity.this, RResultActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
 }

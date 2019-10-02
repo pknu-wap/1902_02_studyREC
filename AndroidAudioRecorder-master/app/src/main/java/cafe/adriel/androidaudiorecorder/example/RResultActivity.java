@@ -74,6 +74,7 @@ public class RResultActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(RResultActivity.this, ResultActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
             }
         });

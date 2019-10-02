@@ -176,9 +176,10 @@ public class AudioRecorderActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
     }
 
+    // onOptionItemSelected를 활성화 시키려면 이거 해줘야함.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.aar_audio_recorder, menu);
+        getMenuInflater().inflate(R.menu.aar_audio_recorder, menu); // 이건 필수
         saveMenuItem = menu.findItem(R.id.action_save);
         saveMenuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.aar_ic_check));
         return super.onCreateOptionsMenu(menu);
@@ -189,6 +190,7 @@ public class AudioRecorderActivity extends AppCompatActivity
         int i = item.getItemId();
         if (i == android.R.id.home) {
             finish();
+            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         } else if (i == R.id.action_save) {
             selectAudio();
         }
@@ -210,6 +212,7 @@ public class AudioRecorderActivity extends AppCompatActivity
         stopRecording();
         setResult(RESULT_OK);
         finish();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     public void toggleRecording(View v) {

@@ -98,6 +98,7 @@ public class AndroidAudioRecorder {
         intent.putExtra(EXTRA_AUTO_START, autoStart);
         intent.putExtra(EXTRA_KEEP_DISPLAY_ON, keepDisplayOn);
         activity.startActivityForResult(intent, requestCode);
+        activity.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     public void recordFromFragment() {
