@@ -2,9 +2,11 @@ package cafe.adriel.androidaudiorecorder.example;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class RResultActivity extends AppCompatActivity {
 
@@ -73,6 +77,15 @@ public class RResultActivity extends AppCompatActivity {
 
             }
         });
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if(prefs.contains("key")){
+            items.clear();
+            Set<String> set = new HashSet<String>();
+            set = prefs.getStringSet("key",null);
+            items.addAll(set);
+        }
+
     }
 
     /** 전체 내장 메모리 크기를 가져온다 */
@@ -224,5 +237,18 @@ public class RResultActivity extends AppCompatActivity {
                 });
         builder.show();
 
+    }
+
+
+    protected void onPause() {
+        super.onPause();
+        if (!items.isEmpty()) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.clear().commit();
+            Set<String> set = new HashSet<String>();
+            set.addAll(items);
+            editor.putStringSet("key", set).commit();
+        }
     }
 }
