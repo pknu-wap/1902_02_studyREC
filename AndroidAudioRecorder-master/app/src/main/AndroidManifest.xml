@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".ResultActivity"/>
         <activity android:name=".RResultActivity"/>
+        <activity android:name=".FileActivity"/>
     </application>
 
 </manifest>

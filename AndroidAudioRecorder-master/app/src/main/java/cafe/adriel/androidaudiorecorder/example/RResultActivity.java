@@ -72,7 +72,8 @@ public class RResultActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(RResultActivity.this, ResultActivity.class);
+
+                Intent intent = new Intent(RResultActivity.this, FileActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
