@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder;
 import cafe.adriel.androidaudiorecorder.model.AudioChannel;
@@ -22,9 +24,18 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_RECORD_AUDIO = 0;
 
+    //시간으로 파일명 생성
+
+    static long time = System.currentTimeMillis();  //시간 받기
+    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+
+    //포멧 변환  형식 만들기
+    static Date dd = new Date(time);  //받은 시간을 Date 형식으로 바꾸기
+    static String strTime = sdf.format(dd); //Data 정보를 포멧 변환하기
+
     // 48kHz크기로 wav파일을 지원한다고 함.
     public static final String AUDIO_FILE_PATH =
-            Environment.getExternalStorageDirectory().getPath() + "/StudyRec/recorded_audio.wav";
+            Environment.getExternalStorageDirectory().getPath() + "/StudyRec/recorded_audio " + strTime + ".wav";
 
     public static Context context;
 
