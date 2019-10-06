@@ -1,25 +1,38 @@
 package cafe.adriel.androidaudiorecorder;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cleveroad.audiovisualization.DbmHandler;
 import com.cleveroad.audiovisualization.GLAudioVisualizationView;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -59,6 +72,21 @@ public class AudioRecorderActivity extends AppCompatActivity
     private ImageButton restartView;
     private ImageButton recordView;
     private ImageButton playView;
+    private ImageButton testView;
+    private ListView listview;
+
+    ArrayList<String> items;
+    ArrayAdapter<String> adapter;
+
+    int position;
+    static long time = System.currentTimeMillis();  //시간 받기
+    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+
+    //포멧 변환  형식 만들기
+    static Date dd = new Date(time);  //받은 시간을 Date 형식으로 바꾸기
+    static String strTime = sdf.format(dd); //Data 정보를 포멧 변환하기
+    public static String AUDIO_FILE_PATH =
+            Environment.getExternalStorageDirectory().getPath() + "/StudyRec/recorded_audio " + strTime + ".wav";
 
     Intent intent;
 
@@ -66,6 +94,25 @@ public class AudioRecorderActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aar_activity_audio_recorder);
+
+        //testButtonFun();
+
+
+        try {
+            if (player != null) {
+                player.release();
+                player = null;
+            }
+
+            player = new MediaPlayer();
+            player.setDataSource(AUDIO_FILE_PATH);
+            player.prepare();
+            player.start();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         intent = new Intent (this,MyService.class);
 
@@ -121,6 +168,30 @@ public class AudioRecorderActivity extends AppCompatActivity
         restartView = (ImageButton) findViewById(R.id.restart);
         recordView = (ImageButton) findViewById(R.id.record);
         playView = (ImageButton) findViewById(R.id.play);
+        testView = (ImageButton) findViewById(R.id.testButton);
+
+        //데이터 준비
+        items = new ArrayList<String>();
+
+        // 어댑터 생성
+        adapter = new ArrayAdapter<String>(AudioRecorderActivity.this,
+                android.R.layout.simple_list_item_single_choice, items);
+
+        // 어댑터 설정
+        listview = (ListView) findViewById(R.id.listview);
+        listview.setAdapter(adapter);
+        listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE); // 하나의 항목만 선택할 수 있도록 설정
+
+
+        testView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                show();
+
+                Toast.makeText(getApplicationContext(), "테스트 이미지 버튼", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         contentLayout.setBackgroundColor(Util.getDarkerColor(color));
         contentLayout.addView(visualizerView, 0);
@@ -139,6 +210,50 @@ public class AudioRecorderActivity extends AppCompatActivity
             playView.setColorFilter(Color.BLACK);
         }
     }
+
+//    public void testButtonFun(){
+//        Toast.makeText(this, "테스트 이미지 버튼", Toast.LENGTH_SHORT).show();
+//    }
+
+
+    void show(){
+
+        final EditText edittext = new EditText(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("AlertDialog Title");
+        builder.setMessage("메모입력");
+        builder.setView(edittext);
+        builder.setPositiveButton("입력",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String text = edittext.getText().toString();  // EditText에 입력된 문자열값을 얻기
+                       // int time = (SystemClock.elapsedRealtime()-timer.getClass())/1000;
+                        if(!text.isEmpty()){                    // 입력된 text 문자열이 비어있지 않으면
+
+                             if(recorderSecondsElapsed>=60){
+                                 int rest = recorderSecondsElapsed%60;
+                                 items.add(recorderSecondsElapsed/60+ "분"+ rest +"초에 입력한 메모: "+ text);
+                             }
+                             else {
+                                 items.add(recorderSecondsElapsed + "초에 입력한 메모: " + text);
+                             }// items 리스트에 입력된 문자열 추가edittext.setText("");                     // EditText 입력란 초기화
+                            adapter.notifyDataSetChanged();     // 리스트 목록 갱신           // 리스트 목록 갱신
+                            }
+                            Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
+                        }
+                    });
+        builder.setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+
+    }
+
+
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
@@ -284,6 +399,7 @@ public class AudioRecorderActivity extends AppCompatActivity
         playView.setVisibility(View.INVISIBLE);
         recordView.setImageResource(R.drawable.aar_ic_pause);
         playView.setImageResource(R.drawable.aar_ic_play);
+        testView.setImageResource(R.drawable.test_icon);
 
         visualizerHandler = new VisualizerHandler();
         visualizerView.linkTo(visualizerHandler);
@@ -296,6 +412,8 @@ public class AudioRecorderActivity extends AppCompatActivity
                     new File(filePath));
         }
         recorder.resumeRecording();
+
+
 
         startTimer();
     }

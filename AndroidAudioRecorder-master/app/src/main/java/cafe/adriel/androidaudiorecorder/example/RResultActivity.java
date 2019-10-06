@@ -104,13 +104,13 @@ public class RResultActivity extends AppCompatActivity {
     }
 
     /** 사용가능한 내장 메모리 크기를 가져온다 */
-    private long getInternalMemorySize() {
+    private long getInternalMemorySize(){
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());
         long blockSize = stat.getBlockSize();
-        long availableBlocks = stat.getAvailableBlocks();
-        return availableBlocks * blockSize;
+        long availableBlocks = stat.getBlockCount();
 
+        return availableBlocks * blockSize;
     }
 
     /** 보기 좋게 MB, KB 단위로 축소시킨다 */
