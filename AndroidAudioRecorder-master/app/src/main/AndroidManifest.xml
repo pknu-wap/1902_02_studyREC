@@ -18,6 +18,8 @@ package="cafe.adriel.androidaudiorecorder.example">
     <activity android:name=".ResultActivity" />
     <activity android:name=".RResultActivity" />
     <activity android:name=".FileActivity" />
+    <activity android:name=".LoadingActivity"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
     <service
         android:name=".MyServiceApp"
         android:enabled="true"
@@ -28,5 +30,6 @@ package="cafe.adriel.androidaudiorecorder.example">
 <uses-permission android:name="android.permission.WAKE_LOCK" />
 
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
 
 </manifest>

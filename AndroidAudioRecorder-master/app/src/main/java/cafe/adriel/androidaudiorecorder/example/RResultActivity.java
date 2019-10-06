@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -86,6 +87,7 @@ public class RResultActivity extends AppCompatActivity {
             Set<String> set = new HashSet<String>();
             set = prefs.getStringSet("key",null);
             items.addAll(set);
+            Collections.sort(items);
         }
 
     }

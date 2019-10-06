@@ -9,9 +9,11 @@
 
     <Button
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="196dp"
-        android:layout_height="196dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_centerInParent="true"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="500dp"
         android:background="@drawable/recorder_icon"
         android:onClick="recordAudio"
         android:padding="20dp"
@@ -20,13 +22,25 @@
 
     <Button
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="121dp"
-        android:layout_height="121dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginTop="470dp"
         android:background="@drawable/folder_icon"
         android:onClick="storageLayout"
         android:padding="20dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@android:color/white" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="start record\nor\nfind record"
+        android:layout_marginLeft="123dp"
+        android:layout_marginTop="100dp"
+        android:textColor="#FFFFFF"
+        android:textSize="35dp"
+        android:gravity="center"
+        android:textStyle="bold"/>
 
 
 </RelativeLayout>

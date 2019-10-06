@@ -15,14 +15,26 @@
         <TextView
             android:id="@+id/textview"
             android:layout_width="match_parent"
+            android:background="@drawable/textviewshape"
             android:layout_height="50dp"
-            android:layout_weight="0.1" />
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:layout_weight="0.1"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            />
 
         <TextView
             android:id="@+id/textview2"
             android:layout_width="match_parent"
+            android:textSize="15dp"
             android:layout_height="50dp"
-            android:layout_weight="0.1" />
+            android:textStyle="bold"
+            android:layout_weight="0.1"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/textviewshape"
+            />
 
     </LinearLayout>
 
