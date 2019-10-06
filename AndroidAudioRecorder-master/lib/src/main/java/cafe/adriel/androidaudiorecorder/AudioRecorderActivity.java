@@ -1,5 +1,6 @@
 package cafe.adriel.androidaudiorecorder;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -59,10 +60,15 @@ public class AudioRecorderActivity extends AppCompatActivity
     private ImageButton recordView;
     private ImageButton playView;
 
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aar_activity_audio_recorder);
+
+        intent = new Intent (this,MyService.class);
+
 
         if(savedInstanceState != null) {
             filePath = savedInstanceState.getString(AndroidAudioRecorder.EXTRA_FILE_PATH);
@@ -150,14 +156,14 @@ public class AudioRecorderActivity extends AppCompatActivity
         } catch (Exception e){ }
     }
 
-    @Override
-    protected void onPause() {
-        restartRecording(null);
-        try {
-            visualizerView.onPause();
-        } catch (Exception e){ }
-        super.onPause();
-    }
+//    @Override
+//    protected void onPause() {
+//        restartRecording(null);
+//        try {
+//            visualizerView.onPause();
+//        } catch (Exception e){ }
+//        super.onPause();
+//    }
 
     @Override
     protected void onDestroy() {
@@ -171,6 +177,9 @@ public class AudioRecorderActivity extends AppCompatActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        startService(intent);
+
+
         outState.putString(AndroidAudioRecorder.EXTRA_FILE_PATH, filePath);
         outState.putInt(AndroidAudioRecorder.EXTRA_COLOR, color);
         super.onSaveInstanceState(outState);

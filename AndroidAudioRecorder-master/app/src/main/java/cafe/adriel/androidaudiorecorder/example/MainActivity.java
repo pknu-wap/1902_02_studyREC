@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     static Date dd = new Date(time);  //받은 시간을 Date 형식으로 바꾸기
     static String strTime = sdf.format(dd); //Data 정보를 포멧 변환하기
 
+
+    Intent intent;
+
     // 48kHz크기로 wav파일을 지원한다고 함.
     public static String AUDIO_FILE_PATH =
             Environment.getExternalStorageDirectory().getPath() + "/StudyRec/recorded_audio " + strTime + ".wav";
@@ -48,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        intent = new Intent(this, MyServiceApp.class);
+
 
         String sdPath = Environment.getExternalStorageDirectory().getAbsolutePath();
         sdPath += "/StudyRec";                  //이 부분은 메인 함수에서 최초 실행되는 게 좋을 듯,
@@ -70,11 +76,16 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_RECORD_AUDIO) {
             if (resultCode == RESULT_OK) {
+                stopService(intent);
+
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 Log.e("111111", "들어왔음");
                 show();
                 Toast.makeText(this, "Audio recorded successfully!", Toast.LENGTH_SHORT).show();
-            } else if (resultCode == RESULT_CANCELED) {
+            }
+
+            else if (resultCode == RESULT_CANCELED) {
+                stopService(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 Toast.makeText(this, "Audio was not recorded", Toast.LENGTH_SHORT).show();
             }
@@ -83,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void recordAudio(View v) {
+        startService(intent);
         AndroidAudioRecorder.with(this)
                 // Required
                 .setFilePath(AUDIO_FILE_PATH)
