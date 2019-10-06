@@ -2,13 +2,18 @@ package cafe.adriel.androidaudiorecorder.example;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -34,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
     static String strTime = sdf.format(dd); //Data 정보를 포멧 변환하기
 
     // 48kHz크기로 wav파일을 지원한다고 함.
-    public static final String AUDIO_FILE_PATH =
+    public static String AUDIO_FILE_PATH =
             Environment.getExternalStorageDirectory().getPath() + "/StudyRec/recorded_audio " + strTime + ".wav";
 
     public static Context context;
-
+    public String text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_RECORD_AUDIO) {
             if (resultCode == RESULT_OK) {
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                Log.e("111111", "들어왔음");
+                show();
                 Toast.makeText(this, "Audio recorded successfully!", Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -73,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
     public void recordAudio(View v) {
         AndroidAudioRecorder.with(this)
@@ -100,4 +108,43 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
+    //대화창에서 수정 선택 시
+    public void show(){
+
+        final EditText edittext = new EditText(this);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("AlertDialog Title");
+        builder.setMessage("녹음 파일 이름 입력");
+        builder.setView(edittext);
+        builder.setPositiveButton("입력",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        text = edittext.getText().toString();        // EditText에 입력된 문자열값을 얻기
+
+                        //recorded_audio.wac -> edittext 창에서 받아온 문자열 값인 text 로 이름 변경
+                        File filePre = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/StudyRec","recorded_audio " + strTime + ".wav");
+                        File fileNow = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/StudyRec",text);
+
+                        //파일 이름이 잘 바뀌었으면
+                        if(filePre.renameTo(fileNow)){
+                            Toast.makeText(getApplicationContext(), text+"파일 저장", Toast.LENGTH_SHORT).show();
+                            AUDIO_FILE_PATH =
+                                    Environment.getExternalStorageDirectory().getPath() + "/StudyRec/"+text;
+                            //파일 이름이 잘 바뀌지 않았으면
+                        }else{
+                            Toast.makeText(getApplicationContext(), text+"파일 저장 실패", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        builder.setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+
+    }
 }
