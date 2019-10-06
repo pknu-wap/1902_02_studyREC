@@ -3,10 +3,12 @@ package cafe.adriel.androidaudiorecorder.example;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -104,11 +106,12 @@ public class RResultActivity extends AppCompatActivity {
     }
 
     /** 사용가능한 내장 메모리 크기를 가져온다 */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private long getInternalMemorySize(){
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());
         long blockSize = stat.getBlockSize();
-        long availableBlocks = stat.getBlockCount();
+        long availableBlocks = stat.getAvailableBlocksLong();
 
         return availableBlocks * blockSize;
     }
