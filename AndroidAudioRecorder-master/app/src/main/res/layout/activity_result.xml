@@ -3,78 +3,99 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="cafe.adriel.androidaudiorecorder.example.ResultActivity">
+
     <LinearLayout
         android:id="@+id/mLayout"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#FF4D29"/>
-    <Button
-        android:id="@+id/play"
-        android:text="Play"
-        android:textColor="#DE402F"
-        android:textSize="30sp"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:background="@drawable/buttonshape"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="360dp"
-        android:textStyle="bold"/>
+        android:background="#FF4D29"
+        >
 
-    <Button
-        android:id="@+id/pause"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:background="@drawable/buttonshape"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="Pause"
-        android:textColor="#DE402F"
-        android:textSize="30sp"
-        android:layout_marginLeft="210dp"
-        android:layout_marginTop="360dp"
-        android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="bottom|center"
+            android:orientation="horizontal"
+            android:layout_marginTop="350dp"
+            android:layout_marginBottom="10dp">
 
-    <Button
-        android:id="@+id/restart"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="545dp"
-        android:background="@drawable/buttonshape"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="Restart"
-        android:textColor="#DE402F"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
+            <Button
+                android:id="@+id/play"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/buttonshape"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="Play"
+                android:textColor="#DE402F"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/stop"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:layout_marginLeft="210dp"
-        android:layout_marginTop="545dp"
-        android:background="@drawable/buttonshape"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="Stop"
-        android:textColor="#DE402F"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="100dp"
-        android:id="@+id/imageView1"
-        android:src="@drawable/recorder_icon"/>
+            <Button
+                android:id="@+id/pause"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/buttonshape"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="Pause"
+                android:textColor="#DE402F"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="bottom|center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/restart"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/buttonshape"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="Restart"
+                android:textColor="#DE402F"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/stop"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/buttonshape"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="Stop"
+                android:textColor="#DE402F"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:gravity="center"
+        android:layout_weight="30"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:id="@+id/imageView1"
+            android:src="@drawable/recorder_icon"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
